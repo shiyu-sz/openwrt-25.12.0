@@ -2,3 +2,5 @@
 *.patch whitespace=-indent-with-non-tab,-space-before-tab,-tab-in-indent,-trailing-space
 *.dts text eol=lf
 *.dts[io] text eol=lf
+dl/linux-6.12.71.tar.xz filter=lfs diff=lfs merge=lfs -text
+dl/linux-firmware-20251125.tar.xz filter=lfs diff=lfs merge=lfs -text

@@ -2,7 +2,6 @@
 .DS_Store
 .*.swp
 /env
-/dl
 /.config
 /.config.old
 /.toolchain_build_ver
@@ -37,3 +36,4 @@ git-src
 .vscode*
 .github
 .devcontainer
+.openwrt_ccache

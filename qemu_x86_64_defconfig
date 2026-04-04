@@ -6186,6 +6186,13 @@ CONFIG_LUCI_CSSTIDY=y
 # end of Multimedia
 
 #
+# my_package
+#
+CONFIG_PACKAGE_example_c=y
+CONFIG_PACKAGE_example_qt=y
+# end of my_package
+
+#
 # Network
 #
 

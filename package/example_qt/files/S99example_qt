@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# Start example_qt....
+#
+
+# 1. tslib 基础配置
+export TSLIB_TSDEVICE=/dev/input/event2  # 你的触摸屏设备节点
+export TSLIB_CALIBFILE=/etc/pointercal   # 校准文件路径
+export TSLIB_CONFFILE=/etc/ts.conf       # 配置文件路径
+export TSLIB_PLUGINDIR=/usr/lib/ts       # tslib 插件路径
+export TSLIB_FBDEVICE=/dev/fb0           # 帧缓冲设备
+
+# 2. 关键：告诉 Qt 使用 tslib 插件
+# export QT_QPA_EGLFS_TSLIB=1 
+
+# 如果你使用的是 linuxfb (针对你之前 eglfs 报错的情况)
+export QT_QPA_GENERIC_PLUGINS=tslib:/dev/input/event2
+export QT_QPA_PLATFORM=eglfs
+export QT_QPA_FONTDIR=/usr/lib/fonts
+
+DAEMON="/usr/bin/example_qt"
+DAEMONOPTS=""
+PIDFILE=/var/run/example_qt.pid
+
+start() {
+      printf "Starting example_qt: "
+      PID=`$DAEMON $DAEMONOPTS > /dev/null 2>&1 & echo $!`
+      if [ -z $PID ]; then
+          printf "Fail \n"
+      else
+          echo $PID >$PIDFILE
+          printf "OK \n"
+      fi
+}
+
+stop() {
+	printf "Stopping example_qt: "
+        PID=`cat $PIDFILE`
+        if [ -f $PIDFILE]; then
+            kill -HUP $PID
+            printf "OK \n"
+            rm -f $PIDFILE
+        else
+            printf "pidfile not found \n"
+        fi
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

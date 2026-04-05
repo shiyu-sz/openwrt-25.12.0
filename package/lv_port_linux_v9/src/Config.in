@@ -1,0 +1,10 @@
+config BR2_PACKAGE_LV_PORT_LINUX_V9
+	bool "lv_port_linux_v9"
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+	  Light and Versatile Graphics Library for embedded systems.
+	  
+	  https://lvgl.io
+
+comment "lvgl needs a toolchain w/ C++"
+	depends on !BR2_INSTALL_LIBSTDCPP
